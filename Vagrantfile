@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 3000, host: 8080
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -65,10 +65,14 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
+
+  if [ ! -e "/home/vagrant/.nvm" ];
+  then
+
     # Ensure OS is up to date
     sudo apt-get -y update
 
-    # Install deependencies for nvm
+    # Install dependencies for nvm
     sudo apt-get -y install build-essential
     sudo apt-get -y install libssl-dev
 
@@ -81,6 +85,10 @@ Vagrant.configure("2") do |config|
 
     # Install latest version of node
     nvm install node
+
+    npm config set bin-links false
+
+  fi
 
   SHELL
 end
