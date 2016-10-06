@@ -66,29 +66,29 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
-  if [ ! -e "/home/vagrant/.nvm" ];
-  then
+    if [ ! -e "/home/vagrant/.nvm" ];
+    then
 
-    # Ensure OS is up to date
-    sudo apt-get -y update
+      # Ensure OS is up to date
+      sudo apt-get -y update
 
-    # Install dependencies for nvm
-    sudo apt-get -y install build-essential
-    sudo apt-get -y install libssl-dev
+      # Install dependencies for nvm
+      sudo apt-get -y install build-essential
+      sudo apt-get -y install libssl-dev
 
-    # Install nvm
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+      # Install nvm
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 
-    # Give this script access to nvm
-    export NVM_DIR="/home/vagrant/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+      # Give this script access to nvm
+      export NVM_DIR="/home/vagrant/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-    # Install latest version of node
-    nvm install node
+      # Install latest version of node
+      nvm install node
 
-    npm config set bin-links false
+      npm config set bin-links false
 
-  fi
+    fi
 
   SHELL
 end
