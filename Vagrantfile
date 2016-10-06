@@ -66,18 +66,16 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     # Ensure OS is up to date
-    apt-get update
+    sudo apt-get -y update
 
     # Install deependencies for nvm
-    sudo apt-get install build-essential
-    sudo apt-get install libssl-dev
+    sudo apt-get -y install build-essential
+    sudo apt-get -y install libssl-dev
 
     # Install nvm
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
-    # alternative to curl
-    # wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 
-    # The below gives this script access to nvm
+    # Give this script access to nvm
     export NVM_DIR="/home/vagrant/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
