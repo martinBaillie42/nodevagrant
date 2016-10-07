@@ -91,5 +91,11 @@ Vagrant.configure("2") do |config|
 
     fi
 
+    # TODO: Install version of node in the .nvmrc
+    # read version in .nvmrc
+    # apply it to variable
+    # install that version
+    # use that version in this directory
+
   SHELL
 end
