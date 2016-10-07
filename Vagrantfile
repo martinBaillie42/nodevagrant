@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
     if [ ! -e "/home/vagrant/.nvm" ];
     then
 
-      # Ensure OS is up to date
+      # Ensure OS packages are up to date
       sudo apt-get -y update
 
       # Install dependencies for nvm
@@ -83,19 +83,28 @@ Vagrant.configure("2") do |config|
       export NVM_DIR="/home/vagrant/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-      # Install latest version of node
-      nvm install node
+      # if project has an .nvmrc file then don't set the node version
+      # if it doesn't have an .nvmrc file then set node version to most recent
+      if [ -e "/vagrant/.nvmrc" ];
+      then
+        nodeversion=""
+      else
+        nodeversion="node"
+      fi
 
-      # Turn off sym links so this will work on Windows hosts
-      npm config set bin-links false
+      # cd into project root
+      # install node
+      # turn off sym links so npm will work on Windows hosts
+      (
+        cd /vagrant;
+        nvm install $nodeversion;
+        npm config set bin-links false;
+        # install your standard global npm packages here
+        # ...
+
+      )
 
     fi
-
-    # TODO: Install version of node in the .nvmrc
-    # read version in .nvmrc
-    # apply it to variable
-    # install that version
-    # use that version in this directory
 
   SHELL
 end
