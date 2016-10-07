@@ -86,6 +86,7 @@ Vagrant.configure("2") do |config|
       # Install latest version of node
       nvm install node
 
+      # Turn off sym links so this will work on Windows hosts
       npm config set bin-links false
 
     fi
